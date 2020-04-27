@@ -52,7 +52,7 @@ class FacebookCommand extends Command {
         $detail['total_walk_success'] = $total_walk_success;
 
 
-        $list_mail_recv = explode("||", 'zeropro500@gmail.com');
+        $list_mail_recv = explode("||", SEND_MAIL_TO);
         $cnt_mail = 0;
         $mail_to = '';
         $mail_cc = [];

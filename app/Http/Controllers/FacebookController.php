@@ -162,7 +162,7 @@ class FacebookController extends Controller {
             $detail['file_url'] = $error_file_url;
             $detail['error_desc'] = $error_desc;
 
-            $list_mail_recv = explode("||", 'zeropro500@gmail.com');
+            $list_mail_recv = explode("||", SEND_MAIL_TO);
             $cnt_mail = 0;
             $mail_to = '';
             $mail_cc = [];
@@ -179,7 +179,7 @@ class FacebookController extends Controller {
 //
 //        // if(count($success_data) > 0){
 //        // Move archieve file
-//        $this->moveArcheiveFile($file_path);
+        $this->moveArcheiveFile($file_path);
 //        // }
 //
         return $totalprocessed;
@@ -310,7 +310,7 @@ class FacebookController extends Controller {
             $detail['file_url'] = $error_file_url;
             $detail['error_desc'] = $error_desc;
 
-            $list_mail_recv = explode("||", 'zeropro500@gmail.com');
+            $list_mail_recv = explode("||", SEND_MAIL_TO);
             $cnt_mail = 0;
             $mail_to = '';
             $mail_cc = [];
@@ -327,7 +327,7 @@ class FacebookController extends Controller {
 //
 //        // if(count($success_data) > 0){
 //        // Move archieve file
-//        $this->moveArcheiveFile($file_path);
+        $this->moveArcheiveFile($file_path);
 //        // }
 //
         return $totalprocessed;
@@ -351,6 +351,16 @@ class FacebookController extends Controller {
     private function getOnlyFilename($file_path) {
         $file_arr = explode('/', $file_path);
         return $file_arr[count($file_arr) - 1];
+    }
+     private function moveArcheiveFile($file_path){
+
+        $file_arr = explode('/', $file_path);
+        $file_name = $file_arr[count($file_arr) - 1];
+        unset($file_arr[count($file_arr) - 1]);
+        $path = implode('/', $file_arr);
+        $move_to_path = $path. '/success/' . $file_name;
+        Storage::disk('s3')->move($file_path, $move_to_path);
+
     }
 
 }
