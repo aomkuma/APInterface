@@ -13,7 +13,12 @@
 	define('CAMPAIGN_PATH', 'Braze/Export/campaign');
 	define('CANVAS_PATH', 'Braze/Export/canvas');
 	define('LOG_PATH', 'Braze/Export/logs');
-
+        define('FACEBOOKOFFLINE_BOOK_PATH', 'FacebookOfflineConversion/Purchase');
+        define('FACEBOOKOFFLINE_WALK_PATH', 'FacebookOfflineConversion/Walk');
+         define('FACEBOOKOFFLINE_LOG', 'FacebookOfflineConversion/log');
+       
+         define('FACEBOOKOFFLINEPOST', 'https://graph.facebook.com/v6.0/233329861241718/events');
+ define('FACEBOOKTOKEN', 'EAAIOH9wYP14BAGY5cWZCNt63NtQ7rJdcmz0nKyCpkNWXWWaICCpjWqXdh2VpEvXD47AW6yUatean4ZB6P5k8yelzXGsQ8oDpFhKUCyYroWZB5tUQEOF6PGWl3klZB2Xw7t9y8VZCkSZBGTkfODTLsFCXwnj8IWeZCCyLZCTVWacSyAAtUJLZATp4qLUn71OTqPx0n4ZCIZCFPRGKAZDZD');
 	define('BRAZE_URL_NEW_USER', 'https://rest.fra-01.braze.eu/users/alias/new');
 	define('BRAZE_URL_UPDATE_USER', 'https://rest.fra-01.braze.eu/users/track');
 	define('BRAZE_URL_EVENT', 'https://rest.fra-01.braze.eu/users/track');
