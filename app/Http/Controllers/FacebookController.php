@@ -190,7 +190,7 @@ class FacebookController extends Controller {
 
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
-      
+
         $array = array();
         $totalprocessed = 0;
         $api_field_list = ['phone', 'email'];
@@ -322,7 +322,7 @@ class FacebookController extends Controller {
                 }
                 $cnt_mail++;
             }
-            Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
+//            Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
         }
 //
 //        // if(count($success_data) > 0){
@@ -352,15 +352,15 @@ class FacebookController extends Controller {
         $file_arr = explode('/', $file_path);
         return $file_arr[count($file_arr) - 1];
     }
-     private function moveArcheiveFile($file_path){
+
+    private function moveArcheiveFile($file_path) {
 
         $file_arr = explode('/', $file_path);
         $file_name = $file_arr[count($file_arr) - 1];
         unset($file_arr[count($file_arr) - 1]);
         $path = implode('/', $file_arr);
-        $move_to_path = $path. '/success/' . $file_name;
+        $move_to_path = $path . '/success/' . $file_name;
         Storage::disk('s3')->move($file_path, $move_to_path);
-
     }
 
 }

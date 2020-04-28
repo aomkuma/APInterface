@@ -67,8 +67,8 @@ class FacebookCommand extends Command {
         Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionMail($detail));
     }
 
-    private function processFiles($EVENT_PATH, $eventname) {
-
+    private function processFiles($EVENT_PATH,$eventname) {
+//        $exp = explode("/", $EVENT_PATH);
         Log::info('Eventname : ' . $eventname);
 
         $list = Storage::disk('s3')->files($EVENT_PATH);
@@ -79,15 +79,14 @@ class FacebookCommand extends Command {
 
         foreach ($list as $key => $value) {
 
- 
+
             $contents = Storage::disk('s3')->get($value);
 
-            if($eventname =='Lead'){
-                 $total_success = $facebook_controller->getCsvWalk($value, $contents, $eventname);
-            }else{
+            if ($eventname == 'Purchase') {
                 $total_success = $facebook_controller->getCsvBook($value, $contents, $eventname);
+            } else {
+                $total_success = $facebook_controller->getCsvWalk($value, $contents, $eventname);
             }
-           
         }
 
         try {
