@@ -13,7 +13,7 @@ define('SUB_SMS_PATH', 'Braze/Export/SubSMS');
 define('CAMPAIGN_PATH', 'Braze/Export/campaign');
 define('CANVAS_PATH', 'Braze/Export/canvas');
 define('LOG_PATH', 'Braze/Export/logs');
-define('FACEBOOKOFFLINE_BOOK_PATH', 'FacebookOfflineConversion/Purchase');
+define('FACEBOOKOFFLINE_PURCHASE_PATH', 'FacebookOfflineConversion/Purchase');
 define('FACEBOOKOFFLINE_WALK_PATH', 'FacebookOfflineConversion/Walk');
 define('FACEBOOKOFFLINE_LOG', 'FacebookOfflineConversion/log');
 

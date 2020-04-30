@@ -9,7 +9,7 @@ h1 {
 
 Daily notice :: Total Success 
 <br><br>
-Purchase : {{ $detail['total_book_success'] }} processed<br>
+Purchase : {{ $detail['total_purchase_success'] }} processed<br>
 Walk : {{ $detail['total_walk_success'] }} processed<br>
 <br>
 

@@ -42,13 +42,13 @@ class FacebookCommand extends Command {
     public function handle() {
 
         $total_walk_success = 0;
-        $total_book_success = 0;
+        $total_purchase_success = 0;
         $total_walk_success = $this->processFiles(FACEBOOKOFFLINE_WALK_PATH, 'Lead');
-        $total_book_success = $this->processFiles(FACEBOOKOFFLINE_BOOK_PATH, 'Purchase');
+        $total_purchase_success = $this->processFiles(FACEBOOKOFFLINE_PURCHASE_PATH, 'Purchase');
 
         $detail = [];
         $detail['type'] = 'Facebook offline conversion Daily Notifications';
-        $detail['total_book_success'] = $total_book_success;
+        $detail['total_purchase_success'] = $total_purchase_success;
         $detail['total_walk_success'] = $total_walk_success;
 
 
