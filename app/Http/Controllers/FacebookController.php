@@ -19,6 +19,9 @@ class FacebookController extends Controller {
     public function getCsvBook($file_path, $contents, $eventname) {
 
 
+        $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_SET_ID[$eventname] . '/events';
+
+        Log::info('event id. : ' . OFFLINE_EVENT_SET_ID[$eventname]);
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
 //         Log::info($lines);
@@ -30,6 +33,7 @@ class FacebookController extends Controller {
         $row = 0;
         $lot = 1;
         $numberoflot = 1500;
+
         // get data
         foreach ($lines as $line) {
             if (!empty($line)) {
@@ -45,7 +49,9 @@ class FacebookController extends Controller {
             }
         }
 
-
+        if ($numberoflot > count($values)) {
+            $numberoflot = count($values) - 1;
+        }
         $cnt_values = count($values);
         $cnt_fields = count($fields);
         $success_data = [];
@@ -114,7 +120,7 @@ class FacebookController extends Controller {
 //                Log::info('data : '. json_encode($res['data']));
                 try {
 //                Log::info(json_encode($res));
-                    $response_data = clientPostRequest(FACEBOOKOFFLINEPOST, ($res));
+                    $response_data = clientPostRequest($eventsetID, ($res));
                     Log::info(json_encode($response_data));
                     // check status            
                     $totalprocessed += $response_data->num_processed_entries;
@@ -188,6 +194,9 @@ class FacebookController extends Controller {
     public function getCsvWalk($file_path, $contents, $eventname) {
 
 
+        $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_SET_ID[$eventname] . '/events';
+
+
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
 
@@ -199,6 +208,8 @@ class FacebookController extends Controller {
         $row = 0;
         $lot = 1;
         $numberoflot = 1500;
+
+        Log::info(' : ' . $numberoflot);
         // get data
         foreach ($lines as $line) {
             if (!empty($line)) {
@@ -213,7 +224,9 @@ class FacebookController extends Controller {
                 $row++;
             }
         }
-
+        if ($numberoflot > count($values)) {
+            $numberoflot = count($values) - 1;
+        }
 
         $cnt_values = count($values);
         $cnt_fields = count($fields);
@@ -268,7 +281,7 @@ class FacebookController extends Controller {
 //                Log::info('data : '. json_encode($res['data']));
                 try {
 //                Log::info(json_encode($res));
-                    $response_data = clientPostRequest(FACEBOOKOFFLINEPOST, ($res));
+                    $response_data = clientPostRequest($eventsetID, ($res));
                     Log::info(json_encode($response_data));
                     // check status            
                     $totalprocessed += $response_data->num_processed_entries;
@@ -322,14 +335,13 @@ class FacebookController extends Controller {
                 }
                 $cnt_mail++;
             }
-//            Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
+            Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
         }
 //
-//        // if(count($success_data) > 0){
-//        // Move archieve file
+
+//         Move archieve file
         $this->moveArcheiveFile($file_path);
-//        // }
-//
+
         return $totalprocessed;
     }
 
