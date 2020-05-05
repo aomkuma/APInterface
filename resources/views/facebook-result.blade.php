@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Interface Braze :: Job</title>
+        <title>Facebook Offline Convertion :: Facebook - Result</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -74,31 +74,16 @@
         </style>
     </head>
     <body>
-        <form action="admin/job/submit" method="post">
+        <form>
             {{ csrf_field() }}
             <div class="flex-center position-ref full-height">
 
                 <div class="content">
                     <div class="title m-b-md">
-                        Job Process
+                       Facebook Offline Convertion  Successfully Processing..
 
                     </div>
-                    <div class="title-detail m-b-md">
-                        <button type="submit" class="form-ele">Run Job</button>
-                    </div>
-                </div>
-
-            </div>
-        </form>
-        <form action="admin/facebook/submit" method="post">
-            {{ csrf_field() }}
-            <div class="flex-center position-ref full-height">
-
-                <div class="content">
-
-                    <div class="title-detail m-b-md">
-                        <button type="submit" class="form-ele">Run Facebook Offline Convertion</button>
-                    </div>
+                    
                 </div>
 
             </div>
