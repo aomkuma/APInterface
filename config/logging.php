@@ -35,6 +35,49 @@ return [
     */
 
     'channels' => [
+
+        'NewCustomer' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/NewCustomer.log'),
+            'level' => 'debug',
+            'days' => 90,
+        ],
+
+        'UpdateCustomer' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/UpdateCustomer.log'),
+            'level' => 'debug',
+            'days' => 90,
+        ],
+
+        'Event' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/Event.log'),
+            'level' => 'debug',
+            'days' => 90,
+        ],
+
+        'Purchase' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/Purchase.log'),
+            'level' => 'debug',
+            'days' => 90,
+        ],
+
+        'SubMail' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/SubMail.log'),
+            'level' => 'debug',
+            'days' => 90,
+        ],
+
+        'DeleteCustomer' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/DeleteCustomer.log'),
+            'level' => 'debug',
+            'days' => 90,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily'],
@@ -43,13 +86,13 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/InterfaceBraze.log'),
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/InterfaceBraze.log'),
             'level' => 'debug',
             'days' => 90,
         ],
@@ -97,7 +140,7 @@ return [
         ],
 
         'emergency' => [
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/InterfaceBraze.log'),
         ],
     ],
 

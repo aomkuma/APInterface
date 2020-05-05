@@ -1,7 +1,7 @@
 <?php
 
-define('BRAZE_API_KEY', '59169c1d-e603-4761-be84-bb34ae03f818'); // go live key
-// define('BRAZE_API_KEY', '4e243e83-a2aa-4a1c-88b2-ccbe03761f53');	// sandbox key
+// define('BRAZE_API_KEY', '59169c1d-e603-4761-be84-bb34ae03f818'); // go live key
+define('BRAZE_API_KEY', '4e243e83-a2aa-4a1c-88b2-ccbe03761f53');	// sandbox key
 
 define('NEW_USER_PATH', 'Braze/Export/NewCustomer');
 define('UPDATE_USER_PATH', 'Braze/Export/UpdateCustomer');
@@ -12,6 +12,7 @@ define('SUB_EMAIL_PATH', 'Braze/Export/SubEmail');
 define('SUB_SMS_PATH', 'Braze/Export/SubSMS');
 define('CAMPAIGN_PATH', 'Braze/Export/campaign');
 define('CANVAS_PATH', 'Braze/Export/canvas');
+define('LANDING_PATH', 'Braze/Landing');
 define('LOG_PATH', 'Braze/Export/logs');
 define('FACEBOOKOFFLINE_PURCHASE_PATH', 'FacebookOfflineConversion/Purchase');
 define('FACEBOOKOFFLINE_WALK_PATH', 'FacebookOfflineConversion/Walk');

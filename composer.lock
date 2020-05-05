@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a5e238e88c0cfad4bf1e99dcc110b44",
+    "content-hash": "86e4402e64c170aa56aef17a262f947c",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.135.2",
+            "version": "3.135.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "1810725052836683d0cfd2907d515173058e710e"
+                "reference": "fb6f4a12d9ad1b8fc1481aef61ed1f8a9fe2164b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/1810725052836683d0cfd2907d515173058e710e",
-                "reference": "1810725052836683d0cfd2907d515173058e710e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fb6f4a12d9ad1b8fc1481aef61ed1f8a9fe2164b",
+                "reference": "fb6f4a12d9ad1b8fc1481aef61ed1f8a9fe2164b",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-04-22T18:11:15+00:00"
+            "time": "2020-04-24T18:14:04+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -889,16 +889,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "c995966d35424bae20f76f8b31248099487a3f57"
+                "reference": "9e780d972185e4f737a03bade0fd34a9e67bbf31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c995966d35424bae20f76f8b31248099487a3f57",
-                "reference": "c995966d35424bae20f76f8b31248099487a3f57",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/9e780d972185e4f737a03bade0fd34a9e67bbf31",
+                "reference": "9e780d972185e4f737a03bade0fd34a9e67bbf31",
                 "shasum": ""
             },
             "require": {
@@ -959,7 +959,33 @@
                 "md",
                 "parser"
             ],
-            "time": "2020-04-20T13:36:51+00:00"
+            "funding": [
+                {
+                    "url": "https://enjoy.gitstore.app/repositories/thephpleague/commonmark",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.colinodell.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.paypal.me/colinpodell/10.00",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/colinodell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/colinodell",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/commonmark",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-04-24T13:39:56+00:00"
         },
         {
             "name": "league/csv",
@@ -1464,6 +1490,30 @@
                 "jsonpath"
             ],
             "time": "2019-12-30T18:03:34+00:00"
+        },
+        {
+            "name": "nealio82/avro-php",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nealio82/avro-php.git",
+                "reference": "678ef0c69cc63fb060559a64b6d1b8e61111a7c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nealio82/avro-php/zipball/678ef0c69cc63fb060559a64b6d1b8e61111a7c0",
+                "reference": "678ef0c69cc63fb060559a64b6d1b8e61111a7c0",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Avro\\": "src/Avro"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Implementation of Apache's Avro PHP library with Composer support, PSR-4 autoloading, namespaces, and type hinted method parameters",
+            "time": "2017-01-30T13:18:10+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -6013,5 +6063,6 @@
     "platform": {
         "php": "^7.2"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
