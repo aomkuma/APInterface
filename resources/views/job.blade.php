@@ -74,7 +74,7 @@
         </style>
     </head>
     <body>
-        <form action="admin/job/submit" method="post">
+        <form action="admin/job/submit" method="post" style="height: 150px;">
             {{ csrf_field() }}
             <div class="flex-center position-ref full-height">
 
@@ -84,20 +84,20 @@
 
                     </div>
                     <div class="title-detail m-b-md">
-                        <button type="submit" class="form-ele">Run Job</button>
+                        <button type="submit" class="form-ele" style="width: 300px;">Run Export Braze Job</button>
                     </div>
                 </div>
 
             </div>
         </form>
-        <form action="admin/facebook/submit" method="post">
+        <form action="admin/facebook/submit" method="post" style="height: 150px;">
             {{ csrf_field() }}
             <div class="flex-center position-ref full-height">
 
                 <div class="content">
 
                     <div class="title-detail m-b-md">
-                        <button type="submit" class="form-ele">Run Facebook Offline Convertion</button>
+                        <button type="submit" class="form-ele" style="width: 300px;">Run Facebook Offline Convertion</button>
                     </div>
                 </div>
 
