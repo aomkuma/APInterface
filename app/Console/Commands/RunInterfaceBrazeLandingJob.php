@@ -12,6 +12,8 @@ use App\Http\Controllers\BrazeLandingController;
 
 use Illuminate\Support\Facades\Log;
 
+use Carbon\Carbon;
+
 class RunInterfaceBrazeLandingJob extends Command
 {
     /**
@@ -27,7 +29,8 @@ class RunInterfaceBrazeLandingJob extends Command
      * @var string
      */
     protected $description = 'Braze Landing Job';
-
+    protected $count_file = 0;
+    protected $process_date = '';
     /**
      * Create a new command instance.
      *
@@ -46,6 +49,7 @@ class RunInterfaceBrazeLandingJob extends Command
     public function handle()
     {
         //
+        $this->process_date = '2020-04-08';//Carbon::now()->add(-1, 'days')->format('Y-m-d');
         $this->processOnlyFolder(LANDING_PATH);
     }
 
@@ -54,7 +58,15 @@ class RunInterfaceBrazeLandingJob extends Command
         $list = Storage::disk('s3')->directories($path);
         // echo 'Total folder in ' . $path . ' ' . count($list) . "\n";
         foreach ($list as $key => $value) {
-            $this->processOnlyFiles($value);
+
+            if(strpos($value, 'date=') !== false){
+                if(strpos($value, 'date=' . $this->process_date) !== false){
+                    $this->processOnlyFiles($value);
+                }
+            }else{
+                $this->processOnlyFiles($value);
+            }
+
         }
     }
 
@@ -66,16 +78,22 @@ class RunInterfaceBrazeLandingJob extends Command
         if(count($list) == 0){
             $this->processOnlyFolder($path);
         }else{
+
+            $total_data = 0;
             foreach ($list as $key => $value) {
                 // echo $value . "\n";
 
                 if(strpos($value, '.avro')!== false){
+                    $this->count_file++;
+                    Log::info($this->count_file . ' File name : ' . $value);
                     $landing_con = new BrazeLandingController;
-                    $landing_con->processAVRO($value);
-                    exit;
+                    $total_data += $landing_con->processAVRO($value, $this->process_date);
+                    // exit;
                     // print_r($list);
                 }
             }
+
+            Log::info("Summary event data : " . $total_data);
         }
     }
 }
