@@ -74,7 +74,7 @@
         </style>
     </head>
     <body>
-        <form action="admin/job/submit" method="post" style="height: 150px;">
+        <form action="admin/job/submit" method="post" >
             {{ csrf_field() }}
             <div class="flex-center position-ref full-height">
 
@@ -90,7 +90,19 @@
 
             </div>
         </form>
-        <form action="admin/facebook/submit" method="post" style="height: 150px;">
+        <form action="admin/job/landing/submit" method="post" >
+            {{ csrf_field() }}
+            <div class="flex-center position-ref full-height">
+
+                <div class="content">
+                    <div class="title-detail m-b-md">
+                        <button type="submit" class="form-ele" style="width: 300px;">Run Landing Braze Job</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        <form action="admin/facebook/submit" method="post" >
             {{ csrf_field() }}
             <div class="flex-center position-ref full-height">
 

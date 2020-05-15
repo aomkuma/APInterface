@@ -25,6 +25,8 @@ class BrazeLandingController extends Controller
     //
     public function processAVRO($path, $process_date){
     	// echo $path;
+    	$format_type = 'Landing';
+
     	$read_io = new StringIO(Storage::disk('s3')->get($path));
     	$data_reader = new DataIOReader($read_io, new IODatumReader());
 		
@@ -78,7 +80,7 @@ class BrazeLandingController extends Controller
 		$path_name = $file_result['path_name'];
 
 		$error_file_url = $this->createCsvFileToS3($path_name, $file_name, $process_date, $labels, $values);
-		Log::info("Total data : " . $cnt);
+		Log::channel($format_type)->info("Total data : " . $cnt);
 		return $cnt;
 		// exit;
     }

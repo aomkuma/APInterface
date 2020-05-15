@@ -78,6 +78,13 @@ return [
             'days' => 90,
         ],
 
+        'Landing' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/Landing.log'),
+            'level' => 'debug',
+            'days' => 90,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily'],

@@ -28,4 +28,5 @@ Route::get('jobs', function () {
 Route::post('admin/login', 'UserController@authenLogin');
 Route::get('jobs', 'JobController@job');
 Route::post('admin/job/submit', 'JobController@processJob');
+Route::post('admin/job/landing/submit', 'JobController@processBrazeLanding');
 Route::post('admin/facebook/submit', 'JobController@processFacebook');

@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Jobs;
 
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 use League\Flysystem\AwsS3v2\AwsS3Adapter;
 
@@ -14,37 +18,26 @@ use Illuminate\Support\Facades\Log;
 
 use Carbon\Carbon;
 
-class RunInterfaceBrazeLandingJob extends Command
-{
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'command:braze_landing_job';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Braze Landing Job';
+class JobInterfaceBrazeLanding implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $count_file = 0;
     protected $process_date = '';
     /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @return void
      */
     public function __construct()
     {
-        parent::__construct();
+        //
     }
 
     /**
-     * Execute the console command.
+     * Execute the job.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
@@ -52,6 +45,7 @@ class RunInterfaceBrazeLandingJob extends Command
         $this->process_date = Carbon::now()->add(-1, 'days')->format('Y-m-d');
         $this->processOnlyFolder(LANDING_PATH);
     }
+
 
     private function processOnlyFolder($path){
 
@@ -71,9 +65,8 @@ class RunInterfaceBrazeLandingJob extends Command
     }
 
     private function processOnlyFiles($path){
-
-        $format_type = 'Landing';
         
+        $format_type = 'Landing';
         $list = Storage::disk('s3')->files($path);
         // echo 'Total files in ' . $path . ' ' . count($list) . "\n";
 
