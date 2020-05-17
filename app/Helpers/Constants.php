@@ -33,5 +33,5 @@ define('BRAZE_URL_SUB_MAIL', 'https://rest.fra-01.braze.eu/email/status');
 define('BRAZE_URL_CAMPAIGN', 'https://rest.fra-01.braze.eu/sends/data_series');
 define('BRAZE_URL_CANVAS', 'https://rest.fra-01.braze.eu/canvas/data_summary');
 
-define('SEND_MAIL_TO', 'korapotu@gmail.com||nuttapol_s@apthai.com||bundit_t@apthai.com||maythad_v@apthai.com||anupong_t@apthai.com');
-// define('SEND_MAIL_TO', 'chodkeengon@gmail.com||korapotu@gmail.com');
+// define('SEND_MAIL_TO', 'korapotu@gmail.com||nuttapol_s@apthai.com||bundit_t@apthai.com||maythad_v@apthai.com||anupong_t@apthai.com');
+define('SEND_MAIL_TO', 'chodkeengon@gmail.com||korapotu@gmail.com');
