@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\RunInterfaceBrazeJob::class,
+        // Commands\RunInterfaceBrazeJob::class,
+        Commands\RunInterfaceBrazeLandingJob::class,
         Commands\FacebookCommand::class,
     ];
 
