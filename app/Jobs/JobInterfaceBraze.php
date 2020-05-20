@@ -44,6 +44,7 @@ class JobInterfaceBraze implements ShouldQueue
     public function handle()
     {
         //
+        Log::info("Begin Manual Processed Job...");
         // Log::info(UPDATE_USER_PATH);
         $total_new_cus_success = 0;
         $total_update_cus_success = 0;
@@ -58,8 +59,16 @@ class JobInterfaceBraze implements ShouldQueue
         $total_purchase_success = $this->processFiles(PURCHASE_PATH, 'Purchase');
         $total_sub_mail_success = $this->processFiles(SUB_EMAIL_PATH, 'SubMail');
         $total_del_cus_success = $this->processFiles(DELETE_CUSTOMER_PATH, 'DeleteCustomer');
+        
+        // read canvas and campaign from braze
+        
+        // $job_controller = new JobProcessController();
 
-        Log::info("Processed job...");
+        // $job_controller->getCampaignData();
+        // $job_controller->getCanvasData();
+
+        Log::info("Daily processed job...");
+        // exit;
 
         try{
 
@@ -103,7 +112,7 @@ class JobInterfaceBraze implements ShouldQueue
             $cnt_mail++;
         }
         Mail::to($mail_to)->cc($mail_cc)->send(new DailyNotificationMail($jobs));
-       
+
     }
 
     private function processFiles($JOB_PATH, $format_type){
@@ -119,7 +128,7 @@ class JobInterfaceBraze implements ShouldQueue
         $cnt_process = 0;
         foreach ($list as $key => $value) { 
 
-            if($cnt_process == 1){
+            // if($cnt_process == 0){
 
                 Log::channel($format_type)->info('Process file : ' . $value);
                 $contents = Storage::disk('s3')->get($value);
@@ -147,7 +156,7 @@ class JobInterfaceBraze implements ShouldQueue
                         break;
                 }
 
-            }
+            // }
 
             $cnt_process++;
             
@@ -174,5 +183,32 @@ class JobInterfaceBraze implements ShouldQueue
 
         return $total_success;
 
+    }
+
+    private function testSendMail(){
+        $jobs = [];
+        $jobs['type'] = '"Test" Mail Daily Notifications';
+        $jobs['total_new_cus_success'] = 0;
+        $jobs['total_update_cus_success'] = 0;
+        $jobs['total_event_success'] = 0;
+        $jobs['total_purchase_success'] = 0;
+        $jobs['total_sub_mail_success'] = 0;
+        $jobs['total_del_cus_success'] = 0;
+
+        $list_mail_recv = explode("||", SEND_MAIL_TO);
+        $cnt_mail = 0;
+        $mail_to = '';
+        $mail_cc = [];
+        foreach ($list_mail_recv as $key => $value) {
+            if($cnt_mail == 0){
+                $mail_to = $value;
+            }else{
+                $mail_cc[] = $value;
+            }
+            $cnt_mail++;
+        }
+        Mail::to($mail_to)->cc($mail_cc)->send(new DailyNotificationMail($jobs));
+
+        // Mail::to(SEND_MAIL_TO)->send(new DailyNotificationMail($jobs));
     }
 }

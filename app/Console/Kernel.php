@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\RunInterfaceBrazeJob::class,
-         Commands\FacebookCommand::class,
+        Commands\FacebookCommand::class,
     ];
 
     /**

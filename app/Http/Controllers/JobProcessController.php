@@ -86,11 +86,11 @@ class JobProcessController extends Controller
 
                 // check status            
                 if($response_data->aliases_processed){
-                	// Keep success
-                	$success_data[] = $values[$i];
+                    // Keep success
+                    $success_data[] = $values[$i];
                 }else{
-                	// Keep error
-                	$error_data[] = $values[$i];
+                    // Keep error
+                    $error_data[] = $values[$i];
                     Log::channel($format_type)->error('-------------ERROR DATA-------------');
                     Log::channel($format_type)->error(json_encode($res));
                     // Log::error(json_encode($response_data));
@@ -122,10 +122,10 @@ class JobProcessController extends Controller
             Log::channel($format_type)->info('URL error file : ' . $error_file_url);
 
 
-        	$jobs = [];
-        	$jobs['type'] = 'New Customer';
-        	$jobs['total_error'] = count($error_data);
-        	$jobs['file_url'] = $error_file_url;
+            $jobs = [];
+            $jobs['type'] = 'New Customer';
+            $jobs['total_error'] = count($error_data);
+            $jobs['file_url'] = $error_file_url;
             $jobs['error_desc'] = $error_desc;
 
             $list_mail_recv = explode("||", SEND_MAIL_TO);
@@ -140,7 +140,7 @@ class JobProcessController extends Controller
                 }
                 $cnt_mail++;
             }
-        	Mail::to($mail_to)->cc($mail_cc)->send(new MailJobsCreated($jobs));
+            Mail::to($mail_to)->cc($mail_cc)->send(new MailJobsCreated($jobs));
 
         }
 
@@ -940,35 +940,46 @@ class JobProcessController extends Controller
         //         }
         //     }
         // }
+        $cnt_values = count($values);
+        $res = ['api_key' => BRAZE_API_KEY, 'external_ids' => []];
+        $item = [];
 
-        $res = ['api_key' => BRAZE_API_KEY,
-                'external_ids' => [
-                        $values
-                    ]
-                ];
+        for($i = 0; $i < count($values); $i++){
 
-        try{
+            $item[] = $values[$i];
+            if( ($i > 0 && ($i%45 == 0)) || ($i == ($cnt_values - 1))){
 
-            // Log::info(json_encode($res));
-            $response_data = clientPostRequest(BRAZE_URL_DEL_USER, ($res));
-            Log::channel($format_type)->info(json_encode($response_data));
+                $res['external_ids'] = $item;
 
-            // check status            
-            if($response_data->deleted){
-                // Keep success
-                $success_data = $values;
-            }else{
-                // Keep error
-                $error_data = $values;
-                Log::channel($format_type)->error('-------------ERROR DATA-------------');
-                Log::channel($format_type)->error(json_encode($res));
-                // Log::channel($format_type)->error(json_encode($response_data));
+                try{
+                    // Log::info('Total delete : ' . count($res['external_ids']));
+                    // Log::info(json_encode($res));exit;
+                    $response_data = clientPostRequest(BRAZE_URL_DEL_USER, ($res));
+                    Log::channel($format_type)->info(json_encode($response_data));
+
+                    // check status            
+                    if($response_data->deleted){
+                        // Keep success
+                        $success_data = $res['external_ids'];
+                    }else{
+                        // Keep error
+                        $error_data = $res['external_ids'];
+                        Log::channel($format_type)->error('-------------ERROR DATA-------------');
+                        Log::channel($format_type)->error(json_encode($res));
+                        // Log::channel($format_type)->error(json_encode($response_data));
+                    }
+
+                }catch(\Exception $e){
+                    $error_data = $res['external_ids'];
+                    Log::channel($format_type)->error($e->getMessage());
+                    $error_desc = $e->getMessage();
+                }
+
+                usleep(25000);
+                $res = ['api_key' => BRAZE_API_KEY, 'external_ids' => []];
+                $item = [];
             }
 
-        }catch(\Exception $e){
-            $error_data = $values;
-            Log::channel($format_type)->error($e->getMessage());
-            $error_desc = $e->getMessage();
         }
 
         Log::channel($format_type)->info('Total success : ' . count($success_data));
@@ -1165,8 +1176,8 @@ class JobProcessController extends Controller
 
     private function createCsvFileToS3($path, $path_type, $file_name, $fields, $values){
 
-    	$storageInstance = Storage::disk('s3');
-    	$file_path = $path . $path_type . $file_name;
+        $storageInstance = Storage::disk('s3');
+        $file_path = $path . $path_type . $file_name;
         $putFileOnStorage = $storageInstance->put($file_path, '');
         $fileContent = $storageInstance->get($file_path);
         $writer = Writer::createFromString($fileContent, 'w');
