@@ -26,7 +26,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('command:braze_job')
+        $schedule->command('command:braze_landing_job')
+                 ->everyMinute();
+        $schedule->command('command:fbcmd')
                  ->everyMinute();
     }
 

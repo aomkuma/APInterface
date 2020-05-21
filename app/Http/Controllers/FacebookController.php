@@ -82,7 +82,7 @@ class FacebookController extends Controller {
 
                         $match_keys[$field_name] = hash("sha256", $field_value);
                     }
-                } else if ($fields[$j] == 'timeStamp') {
+                } else if ($fields[$j] == 'eventtimestamp'/*'timeStamp'*/) {
                     $field_value = trim($values[$i][$j]);
                     if (!empty($field_value) && $field_value != $this->check_na_value) {
                         $event_time = strtotime($field_value);
@@ -158,7 +158,7 @@ class FacebookController extends Controller {
             // $fileName = "New_Cus_$now.csv";
             $fileName = $this->getOnlyFilename($file_path);
 
-            $error_file_url = $this->createCsvFileToS3(FACEBOOKOFFLINE_BOOK_PATH, '/error/', $fileName, $fields_arr, $error_data);
+            $error_file_url = $this->createCsvFileToS3(FACEBOOKOFFLINE_PURCHASE_PATH, '/error/', $fileName, $fields_arr, $error_data);
             Log::info('URL error file : ' . $error_file_url);
 
 
@@ -256,7 +256,7 @@ class FacebookController extends Controller {
 
                         $match_keys[$field_name] = hash("sha256", $field_value);
                     }
-                } else if ($fields[$j] == 'timeStamp') {
+                } else if ($fields[$j] == 'eventtimestamp'/*'timeStamp'*/) {
                     $field_value = trim($values[$i][$j]);
                     if (!empty($field_value) && $field_value != $this->check_na_value) {
                         $event_time = strtotime($field_value);

@@ -87,7 +87,7 @@ class BrazeLandingController extends Controller
 
     private function createCsvFileToS3($path_name, $file_name, $process_date, $fields, $values){
 
-    	$storageInstance = Storage::disk('local');
+    	$storageInstance = Storage::disk('s3');
     	$base_file_path = 'Braze/Landing/EventData/' . $path_name . '/' . $process_date . '__' . $file_name;
         $putFileOnStorage = $storageInstance->put($base_file_path, '');
         $fileContent = $storageInstance->get($base_file_path);

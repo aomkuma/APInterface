@@ -91,7 +91,7 @@ class FacebookCommand extends Command {
 
         try {
 
-            $file_name = 'laravel-' . date('Y-m-d') . '.log';
+            $file_name = 'InterfaceBraze-' . date('Y-m-d') . '.log';
 
             $log_file_name = 'storage/logs/' . $file_name;
             $log_file = fopen($log_file_name, 'r');
