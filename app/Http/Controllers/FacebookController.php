@@ -32,7 +32,7 @@ class FacebookController extends Controller {
         $values = [];
         $row = 0;
         $lot = 1;
-        $numberoflot = 1500;
+        $numberoflot = 1;
 
         // get data
         foreach ($lines as $line) {
@@ -67,13 +67,11 @@ class FacebookController extends Controller {
             $data = [];
             $match_keys = [];
             $event_time = 0;
-
             $currency = 'THB';
             $value = 0.0;
             $custom_data = [];
 
             for ($j = 0; $j < $cnt_fields; $j++) {
-
                 if (in_array($fields[$j], $api_field_list)) {
 
                     $field_value = trim($values[$i][$j]);
@@ -82,7 +80,7 @@ class FacebookController extends Controller {
 
                         $match_keys[$field_name] = hash("sha256", $field_value);
                     }
-                } else if ($fields[$j] == 'eventtimestamp'/*'timeStamp'*/) {
+                } else if ($fields[$j] == 'eventtimestamp'/* 'timeStamp' */) {
                     $field_value = trim($values[$i][$j]);
                     if (!empty($field_value) && $field_value != $this->check_na_value) {
                         $event_time = strtotime($field_value);
@@ -111,31 +109,28 @@ class FacebookController extends Controller {
             $data['currency'] = $currency;
             $data['value'] = $value;
             $data['custom_data'] = json_encode($custom_data);
-
             $data['contents'] = [];
             $res['data'][] = $data;
 
             if (($i > 0 && ($i % $numberoflot == 0)) || ($i == ($cnt_values - 1))) {
-                Log::info('Lot no. : ' . $lot);
-//                Log::info('data : '. json_encode($res['data']));
+//                Log::info('Lot no. : ' . $lot);
+
                 try {
-//                Log::info(json_encode($res));
+
                     $response_data = clientPostRequest($eventsetID, ($res));
-                    Log::info(json_encode($response_data));
+//                    Log::info(json_encode($response_data));
                     // check status            
                     $totalprocessed += $response_data->num_processed_entries;
                 } catch (\Exception $e) {
                     Log::error('-------------ERROR DATA-------------');
                     $error_desc = $e->getMessage();
                     $startloop = $i - $numberoflot;
-
-
                     //$startloop . ' - ' . $i
                     for ($x = $startloop; $x <= $i; $x++) {
 
                         $error_data[] = $values[$x];
                     }
-                    //  Log::info('error no.' . count($error_data));
+
                     Log::error($e->getMessage());
                 }
 
@@ -145,8 +140,6 @@ class FacebookController extends Controller {
                 $lot++;
             }
         }
-//        Log::info('total =' . $totalprocessed);
-//
         Log::info('Total success : ' . $totalprocessed);
         Log::info('Total error : ' . count($error_data));
 //
@@ -157,17 +150,14 @@ class FacebookController extends Controller {
             $now = date('YmdHis');
             // $fileName = "New_Cus_$now.csv";
             $fileName = $this->getOnlyFilename($file_path);
-
             $error_file_url = $this->createCsvFileToS3(FACEBOOKOFFLINE_PURCHASE_PATH, '/error/', $fileName, $fields_arr, $error_data);
             Log::info('URL error file : ' . $error_file_url);
-
 
             $detail = [];
             $detail['type'] = 'BOOK';
             $detail['total_error'] = count($error_data);
             $detail['file_url'] = $error_file_url;
             $detail['error_desc'] = $error_desc;
-
             $list_mail_recv = explode("||", SEND_MAIL_TO);
             $cnt_mail = 0;
             $mail_to = '';
@@ -183,10 +173,10 @@ class FacebookController extends Controller {
             Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
         }
 //
-//        // if(count($success_data) > 0){
+//      
 //        // Move archieve file
         $this->moveArcheiveFile($file_path);
-//        // }
+//    
 //
         return $totalprocessed;
     }
@@ -195,7 +185,6 @@ class FacebookController extends Controller {
 
 
         $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_SET_ID[$eventname] . '/events';
-
 
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
@@ -207,7 +196,7 @@ class FacebookController extends Controller {
         $values = [];
         $row = 0;
         $lot = 1;
-        $numberoflot = 1500;
+        $numberoflot = 1;
 
         Log::info(' : ' . $numberoflot);
         // get data
@@ -243,11 +232,8 @@ class FacebookController extends Controller {
             $data = [];
             $match_keys = [];
             $event_time = 0;
-
             $custom_data = [];
-
             for ($j = 0; $j < $cnt_fields; $j++) {
-
                 if (in_array($fields[$j], $api_field_list)) {
 
                     $field_value = trim($values[$i][$j]);
@@ -256,7 +242,7 @@ class FacebookController extends Controller {
 
                         $match_keys[$field_name] = hash("sha256", $field_value);
                     }
-                } else if ($fields[$j] == 'eventtimestamp'/*'timeStamp'*/) {
+                } else if ($fields[$j] == 'eventtimestamp'/* 'timeStamp' */) {
                     $field_value = trim($values[$i][$j]);
                     if (!empty($field_value) && $field_value != $this->check_na_value) {
                         $event_time = strtotime($field_value);
@@ -277,26 +263,23 @@ class FacebookController extends Controller {
             $res['data'][] = $data;
 
             if (($i > 0 && ($i % $numberoflot == 0)) || ($i == ($cnt_values - 1))) {
-                Log::info('Lot no. : ' . $lot);
-//                Log::info('data : '. json_encode($res['data']));
+//                Log::info('Lot no. : ' . $lot);
+
                 try {
 //                Log::info(json_encode($res));
                     $response_data = clientPostRequest($eventsetID, ($res));
-                    Log::info(json_encode($response_data));
+//                    Log::info(json_encode($response_data));
                     // check status            
                     $totalprocessed += $response_data->num_processed_entries;
                 } catch (\Exception $e) {
-//                    print_r($e);
-//                    exit;
+
                     $error_desc = $e->getMessage();
                     $startloop = $i - $numberoflot;
-                    //$startloop . ' - ' . $i
                     for ($x = $startloop; $x <= $i; $x++) {
                         $error_data[] = $values[$x];
                     }
-                    //    Log::info('error no.' . count($error_data));
                     Log::error($e->getMessage());
-//                    Log::error(json_encode($error_data));
+//      
                 }
 
                 $res = ['access_token' => FACEBOOKTOKEN,
@@ -338,7 +321,6 @@ class FacebookController extends Controller {
             Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
         }
 //
-
 //         Move archieve file
         $this->moveArcheiveFile($file_path);
 
