@@ -45,15 +45,10 @@ class FacebookCommand extends Command {
         $detail = [];
         $detail['type'] = 'Facebook offline conversion Daily Notifications';
         $detail['result'] = [];
-        foreach (OFFLINE_EVENT_TYPE as $pathtype) {
-            $define_eventname = '';
-            if ($pathtype == 'Walk') {
-                $define_eventname = 'Lead';
-            } else {
-                $define_eventname = $pathtype;
-            }
-            $result = $this->processFiles(FACEBOOKOFFLINE_PATH . $pathtype, $define_eventname);
-            $message = $pathtype . ' ' . $result . ' processed';
+        foreach (OFFLINE_EVENT_CONFIG as $event) {
+         
+            $result = $this->processFiles($event['path'],$event['eventname']);
+            $message = $event['eventname'] . ' ' . $result . ' processed';
             array_push($detail['result'], $message);
         }
 

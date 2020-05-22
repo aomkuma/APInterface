@@ -19,9 +19,9 @@ class FacebookController extends Controller {
     public function getCsvBook($file_path, $contents, $eventname) {
 
 
-        $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_SET_ID[$eventname] . '/events';
+        $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'] . '/events';
 
-        Log::info('event id. : ' . OFFLINE_EVENT_SET_ID[$eventname]);
+        Log::info('event id. : ' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id']);
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
 //         Log::info($lines);
@@ -150,7 +150,7 @@ class FacebookController extends Controller {
             $now = date('YmdHis');
             // $fileName = "New_Cus_$now.csv";
             $fileName = $this->getOnlyFilename($file_path);
-            $error_file_url = $this->createCsvFileToS3(FACEBOOKOFFLINE_PURCHASE_PATH, '/error/', $fileName, $fields_arr, $error_data);
+            $error_file_url = $this->createCsvFileToS3(OFFLINE_EVENT_CONFIG[$eventname]['path'], '/error/', $fileName, $fields_arr, $error_data);
             Log::info('URL error file : ' . $error_file_url);
 
             $detail = [];
@@ -184,7 +184,7 @@ class FacebookController extends Controller {
     public function getCsvWalk($file_path, $contents, $eventname) {
 
 
-        $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_SET_ID[$eventname] . '/events';
+        $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'] . '/events';
 
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
@@ -298,7 +298,7 @@ class FacebookController extends Controller {
             $now = date('YmdHis');
             // $fileName = "New_Cus_$now.csv";
             $fileName = $this->getOnlyFilename($file_path);
-            $error_file_url = $this->createCsvFileToS3(FACEBOOKOFFLINE_WALK_PATH, '/error/', $fileName, $fields_arr, $error_data);
+            $error_file_url = $this->createCsvFileToS3(OFFLINE_EVENT_CONFIG[$eventname]['path'], '/error/', $fileName, $fields_arr, $error_data);
             Log::info('URL error file : ' . $error_file_url);
             $detail = [];
             $detail['type'] = 'WALK';
