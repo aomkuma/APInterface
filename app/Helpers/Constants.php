@@ -28,23 +28,27 @@ define('LANDING_PATH', 'Braze/Landing');
 # End Braze Landing
 
 #Facebook offline conversion
-define('OFFLINE_EVENT_CONFIG', ['Purchase'=>
+
+define('FACEBOOKTOKEN', 'EAAIOH9wYP14BAGY5cWZCNt63NtQ7rJdcmz0nKyCpkNWXWWaICCpjWqXdh2VpEvXD47AW6yUatean4ZB6P5k8yelzXGsQ8oDpFhKUCyYroWZB5tUQEOF6PGWl3klZB2Xw7t9y8VZCkSZBGTkfODTLsFCXwnj8IWeZCCyLZCTVWacSyAAtUJLZATp4qLUn71OTqPx0n4ZCIZCFPRGKAZDZD');
+
+define('FACEBOOKOFFLINE_LOG', 'FacebookOfflineConversion/log');
+
+define('OFFLINE_EVENT_CONFIG', [
+									'Purchase'=>
 									[
 										'event_set_id'=>642418166540775,
 										'path'=>'FacebookOfflineConversion/Purchase',
 										'eventname'=>'Purchase'
 									],
-	                                'Lead'=>
+
+		                            'Lead'=>
 	                                [
 	                                	'event_set_id'=>233329861241718,
 	                                	'path'=>'FacebookOfflineConversion/Walk',
 	                                	'eventname'=>'Lead'
 	                                ]
+	                                
 	                            ]);
-
-define('FACEBOOKTOKEN', 'EAAIOH9wYP14BAGY5cWZCNt63NtQ7rJdcmz0nKyCpkNWXWWaICCpjWqXdh2VpEvXD47AW6yUatean4ZB6P5k8yelzXGsQ8oDpFhKUCyYroWZB5tUQEOF6PGWl3klZB2Xw7t9y8VZCkSZBGTkfODTLsFCXwnj8IWeZCCyLZCTVWacSyAAtUJLZATp4qLUn71OTqPx0n4ZCIZCFPRGKAZDZD');
-
-define('FACEBOOKOFFLINE_LOG', 'FacebookOfflineConversion/log');
 #Facebook offline conversion
 
 #Email sent to persons
