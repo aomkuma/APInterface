@@ -14,13 +14,13 @@ define('CAMPAIGN_PATH', 'Braze/Export/campaign');
 define('CANVAS_PATH', 'Braze/Export/canvas');
 define('LANDING_PATH', 'Braze/Landing');
 define('LOG_PATH', 'Braze/Export/logs');
-define('FACEBOOKOFFLINE_PURCHASE_PATH', 'FacebookOfflineConversion/Purchase');
-define('FACEBOOKOFFLINE_WALK_PATH', 'FacebookOfflineConversion/Walk');
+
+define('FACEBOOKOFFLINE_PATH', 'FacebookOfflineConversion/');
 define('FACEBOOKOFFLINE_LOG', 'FacebookOfflineConversion/log');
 
-//define('FACEBOOKOFFLINEPOST', 'https://graph.facebook.com/v6.0/233329861241718/events');
 
 define('OFFLINE_EVENT_SET_ID', ['Purchase'=>642418166540775,'Lead'=>233329861241718]);
+define('OFFLINE_EVENT_TYPE', ['Purchase','Walk']);
 
 define('FACEBOOKTOKEN', 'EAAIOH9wYP14BAGY5cWZCNt63NtQ7rJdcmz0nKyCpkNWXWWaICCpjWqXdh2VpEvXD47AW6yUatean4ZB6P5k8yelzXGsQ8oDpFhKUCyYroWZB5tUQEOF6PGWl3klZB2Xw7t9y8VZCkSZBGTkfODTLsFCXwnj8IWeZCCyLZCTVWacSyAAtUJLZATp4qLUn71OTqPx0n4ZCIZCFPRGKAZDZD');
 define('BRAZE_URL_NEW_USER', 'https://rest.fra-01.braze.eu/users/alias/new');
@@ -35,3 +35,4 @@ define('BRAZE_URL_CANVAS', 'https://rest.fra-01.braze.eu/canvas/data_summary');
 
 define('SEND_MAIL_TO', 'korapotu@gmail.com||nuttapol_s@apthai.com||bundit_t@apthai.com||maythad_v@apthai.com||anupong_t@apthai.com');
 // define('SEND_MAIL_TO', 'chodkeengon@gmail.com||korapotu@gmail.com');
+// define('SEND_MAIL_TO', 'zeropro500@gmail.com');

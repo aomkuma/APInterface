@@ -40,17 +40,22 @@ class FacebookCommand extends Command {
      * @return mixed
      */
     public function handle() {
-
-        $total_walk_success = 0;
-        $total_purchase_success = 0;
-        $total_walk_success = $this->processFiles(FACEBOOKOFFLINE_WALK_PATH, 'Lead');
-        $total_purchase_success = $this->processFiles(FACEBOOKOFFLINE_PURCHASE_PATH, 'Purchase');
+        $message = '';
 
         $detail = [];
         $detail['type'] = 'Facebook offline conversion Daily Notifications';
-        $detail['total_purchase_success'] = $total_purchase_success;
-        $detail['total_walk_success'] = $total_walk_success;
-
+        $detail['result'] = [];
+        foreach (OFFLINE_EVENT_TYPE as $pathtype) {
+            $define_eventname = '';
+            if ($pathtype == 'Walk') {
+                $define_eventname = 'Lead';
+            } else {
+                $define_eventname = $pathtype;
+            }
+            $result = $this->processFiles(FACEBOOKOFFLINE_PATH . $pathtype, $define_eventname);
+            $message = $pathtype . ' ' . $result . ' processed';
+            array_push($detail['result'], $message);
+        }
 
         $list_mail_recv = explode("||", SEND_MAIL_TO);
         $cnt_mail = 0;
@@ -67,7 +72,7 @@ class FacebookCommand extends Command {
         Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionMail($detail));
     }
 
-    private function processFiles($EVENT_PATH,$eventname) {
+    private function processFiles($EVENT_PATH, $eventname) {
 //        $exp = explode("/", $EVENT_PATH);
         Log::info('Eventname : ' . $eventname);
 
