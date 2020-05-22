@@ -69,6 +69,7 @@ class FacebookCommand extends Command {
 
     private function processFiles($EVENT_PATH, $eventname) {
 //        $exp = explode("/", $EVENT_PATH);
+       
         Log::info('Eventname : ' . $eventname);
 
         $list = Storage::disk('s3')->files($EVENT_PATH);

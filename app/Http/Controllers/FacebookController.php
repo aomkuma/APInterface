@@ -185,7 +185,7 @@ class FacebookController extends Controller {
 
 
         $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'] . '/events';
-
+        Log::info('event id. : ' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id']);
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
 
@@ -266,9 +266,8 @@ class FacebookController extends Controller {
 //                Log::info('Lot no. : ' . $lot);
 
                 try {
-//                Log::info(json_encode($res));
+
                     $response_data = clientPostRequest($eventsetID, ($res));
-//                    Log::info(json_encode($response_data));
                     // check status            
                     $totalprocessed += $response_data->num_processed_entries;
                 } catch (\Exception $e) {
