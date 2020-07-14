@@ -45,9 +45,9 @@ class FacebookCommand extends Command {
         $detail = [];
         $detail['type'] = 'Facebook offline conversion Daily Notifications';
         $detail['result'] = [];
-        foreach (OFFLINE_EVENT_CONFIG as $event) {
-         
-            $result = $this->processFiles($event['path'],$event['eventname']);
+       foreach (OFFLINE_EVENT_CONFIG as $event) {
+         $result = $this->processFiles($event['path'],$event['eventname']);
+      //      $result = $this->processFiles('','Lead');
             $message = $event['eventname'] . ' ' . $result . ' processed';
             array_push($detail['result'], $message);
         }
@@ -73,6 +73,7 @@ class FacebookCommand extends Command {
         Log::info('Eventname : ' . $eventname);
 
         $list = Storage::disk('s3')->files($EVENT_PATH);
+//$list = Storage::disk('local')->files('/test');
 
         $facebook_controller = new FacebookController();
 
@@ -81,7 +82,7 @@ class FacebookCommand extends Command {
         foreach ($list as $key => $value) {
 
 
-            $contents = Storage::disk('s3')->get($value);
+            $contents = Storage::disk('local')->get($value);
 
             if ($eventname == 'Purchase') {
                 $total_success = $facebook_controller->getCsvBook($value, $contents, $eventname);
@@ -101,7 +102,7 @@ class FacebookCommand extends Command {
             $storageInstance = Storage::disk('s3');
 
             $S3_file_path = FACEBOOKOFFLINE_LOG . '/' . $file_name;
-            $putFileOnStorage = $storageInstance->put($S3_file_path, $content);
+           $putFileOnStorage = $storageInstance->put($S3_file_path, $content);
         } catch (\Exception $e) {
 
             Log::error($e->getMessage());

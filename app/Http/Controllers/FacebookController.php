@@ -19,7 +19,7 @@ class FacebookController extends Controller {
     public function getCsvBook($file_path, $contents, $eventname) {
 
 
-        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'] ;
+        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'];
 
         Log::info('event id. : ' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id']);
         // $lines = explode(PHP_EOL, $contents);
@@ -110,6 +110,9 @@ class FacebookController extends Controller {
             $data['value'] = $value;
             $data['custom_data'] = json_encode($custom_data);
             $data['contents'] = [];
+            $data['data_processing_options']=["LDU"];
+            $data['data_processing_options_country']=0;
+            $data['data_processing_options_state']=0;
             $res['data'][] = $data;
 
             if (($i > 0 && ($i % $numberoflot == 0)) || ($i == ($cnt_values - 1))) {
@@ -183,7 +186,7 @@ class FacebookController extends Controller {
     public function getCsvWalk($file_path, $contents, $eventname) {
 
 
-        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'] ;
+        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'];
         Log::info('event id. : ' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id']);
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
@@ -259,6 +262,11 @@ class FacebookController extends Controller {
             $data['event_name'] = $eventname;
             $data['custom_data'] = json_encode($custom_data);
             $data['contents'] = [];
+            $data['data_processing_options']=["LDU"];
+            $data['data_processing_options_country']=0;
+            $data['data_processing_options_state']=0;
+           
+            
             $res['data'][] = $data;
 
             if (($i > 0 && ($i % $numberoflot == 0)) || ($i == ($cnt_values - 1))) {
@@ -267,6 +275,7 @@ class FacebookController extends Controller {
                 try {
 
                     $response_data = clientPostRequest($eventsetID, ($res));
+
                     // check status            
                     $totalprocessed += $response_data->success;
                 } catch (\Exception $e) {
@@ -296,7 +305,7 @@ class FacebookController extends Controller {
             $now = date('YmdHis');
             // $fileName = "New_Cus_$now.csv";
             $fileName = $this->getOnlyFilename($file_path);
-            $error_file_url = $this->createCsvFileToS3(OFFLINE_EVENT_CONFIG[$eventname]['path'], '/error/', $fileName, $fields_arr, $error_data);
+           $error_file_url = $this->createCsvFileToS3(OFFLINE_EVENT_CONFIG[$eventname]['path'], '/error/', $fileName, $fields_arr, $error_data);
             Log::info('URL error file : ' . $error_file_url);
             $detail = [];
             $detail['type'] = 'WALK';
