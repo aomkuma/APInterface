@@ -19,7 +19,7 @@ class FacebookController extends Controller {
     public function getCsvBook($file_path, $contents, $eventname) {
 
 
-        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'];
+        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'.'/events'];
 
         Log::info('event id. : ' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id']);
         // $lines = explode(PHP_EOL, $contents);
@@ -109,11 +109,11 @@ class FacebookController extends Controller {
             $data['currency'] = $currency;
             $data['value'] = $value;
             $data['custom_data'] = json_encode($custom_data);
-            $data['contents'] = [];
-            $data['data_processing_options']=["LDU"];
+          //  $data['contents'] = [];
+            $data['data_processing_options']="LDU";
             $data['data_processing_options_country']=0;
             $data['data_processing_options_state']=0;
-            $res['data'][] = $data;
+            $res['data'][] = json_encode($data);
 
             if (($i > 0 && ($i % $numberoflot == 0)) || ($i == ($cnt_values - 1))) {
 //                Log::info('Lot no. : ' . $lot);
@@ -122,7 +122,7 @@ class FacebookController extends Controller {
 
                     $response_data = clientPostRequest($eventsetID, ($res));
                     // check status            
-                    $totalprocessed += $response_data->success;
+                    $totalprocessed += $response_data->num_processed_entries;
                 } catch (\Exception $e) {
                     Log::error('-------------ERROR DATA-------------');
                     $error_desc = $e->getMessage();
@@ -186,7 +186,7 @@ class FacebookController extends Controller {
     public function getCsvWalk($file_path, $contents, $eventname) {
 
 
-        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'];
+        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'].'/events';
         Log::info('event id. : ' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id']);
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
@@ -261,13 +261,11 @@ class FacebookController extends Controller {
             $data['event_time'] = $event_time;
             $data['event_name'] = $eventname;
             $data['custom_data'] = json_encode($custom_data);
-            $data['contents'] = [];
-            $data['data_processing_options']=["LDU"];
+           // $data['contents'] = [];
+            $data['data_processing_options']="LDU";
             $data['data_processing_options_country']=0;
-            $data['data_processing_options_state']=0;
-           
-            
-            $res['data'][] = $data;
+            $data['data_processing_options_state']=0;           
+            $res['data'][] = json_encode($data);
 
             if (($i > 0 && ($i % $numberoflot == 0)) || ($i == ($cnt_values - 1))) {
 //                Log::info('Lot no. : ' . $lot);
@@ -277,7 +275,7 @@ class FacebookController extends Controller {
                     $response_data = clientPostRequest($eventsetID, ($res));
 
                     // check status            
-                    $totalprocessed += $response_data->success;
+                    $totalprocessed += $response_data->num_processed_entries;
                 } catch (\Exception $e) {
 
                     $error_desc = $e->getMessage();
@@ -325,7 +323,7 @@ class FacebookController extends Controller {
                 }
                 $cnt_mail++;
             }
-            Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
+           Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
         }
 //
 //         Move archieve file

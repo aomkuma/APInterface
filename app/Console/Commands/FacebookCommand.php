@@ -47,11 +47,10 @@ class FacebookCommand extends Command {
         $detail['result'] = [];
        foreach (OFFLINE_EVENT_CONFIG as $event) {
          $result = $this->processFiles($event['path'],$event['eventname']);
-      //      $result = $this->processFiles('','Lead');
-            $message = $event['eventname'] . ' ' . $result . ' processed';
+                  $message = $event['eventname'] . ' ' . $result . ' processed';
             array_push($detail['result'], $message);
         }
-
+  //    $result = $this->processFiles('','Lead');
         $list_mail_recv = explode("||", SEND_MAIL_TO);
         $cnt_mail = 0;
         $mail_to = '';
@@ -72,7 +71,7 @@ class FacebookCommand extends Command {
        
         Log::info('Eventname : ' . $eventname);
 
-        $list = Storage::disk('s3')->files($EVENT_PATH);
+       $list = Storage::disk('s3')->files($EVENT_PATH);
 //$list = Storage::disk('local')->files('/test');
 
         $facebook_controller = new FacebookController();
@@ -82,7 +81,7 @@ class FacebookCommand extends Command {
         foreach ($list as $key => $value) {
 
 
-            $contents = Storage::disk('local')->get($value);
+            $contents = Storage::disk('s3')->get($value);
 
             if ($eventname == 'Purchase') {
                 $total_success = $facebook_controller->getCsvBook($value, $contents, $eventname);
