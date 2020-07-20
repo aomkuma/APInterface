@@ -50,7 +50,9 @@ class FacebookCommand extends Command {
                   $message = $event['eventname'] . ' ' . $result . ' processed';
             array_push($detail['result'], $message);
         }
-  //    $result = $this->processFiles('','Lead');
+         $facebook_controller = new FacebookController();
+      
+    //  $result = $this->processFiles('','Lead');
         $list_mail_recv = explode("||", SEND_MAIL_TO);
         $cnt_mail = 0;
         $mail_to = '';

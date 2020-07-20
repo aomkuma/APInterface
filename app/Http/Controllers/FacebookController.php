@@ -19,7 +19,7 @@ class FacebookController extends Controller {
     public function getCsvBook($file_path, $contents, $eventname) {
 
 
-        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'.'/events'];
+        $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'.'/events'];
 
         Log::info('event id. : ' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id']);
         // $lines = explode(PHP_EOL, $contents);
@@ -59,8 +59,8 @@ class FacebookController extends Controller {
 
         // re format data
         $res = ['access_token' => FACEBOOKTOKEN,
-            'upload_tag' => 'store_data',
-            'data' => []];
+        'upload_tag' => 'store_data',
+        'data' => []];
 
         Log::info('Event ' . $eventname . ' total : ' . count($values));
         for ($i = 0; $i < $cnt_values; $i++) {
@@ -109,11 +109,9 @@ class FacebookController extends Controller {
             $data['currency'] = $currency;
             $data['value'] = $value;
             $data['custom_data'] = json_encode($custom_data);
-          //  $data['contents'] = [];
-            $data['data_processing_options']="LDU";
-            $data['data_processing_options_country']=0;
-            $data['data_processing_options_state']=0;
-            $res['data'][] = json_encode($data);
+            $data['contents'] = [];
+         
+            $res['data'][] = $data;
 
             if (($i > 0 && ($i % $numberoflot == 0)) || ($i == ($cnt_values - 1))) {
 //                Log::info('Lot no. : ' . $lot);
@@ -137,8 +135,8 @@ class FacebookController extends Controller {
                 }
 
                 $res = ['access_token' => FACEBOOKTOKEN,
-                    'upload_tag' => 'store_data',
-                    'data' => []];
+                'upload_tag' => 'store_data',
+                'data' => []];
                 $lot++;
             }
         }
@@ -186,7 +184,7 @@ class FacebookController extends Controller {
     public function getCsvWalk($file_path, $contents, $eventname) {
 
 
-        $eventsetID = 'https://graph.facebook.com/v7.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'].'/events';
+        $eventsetID = 'https://graph.facebook.com/v6.0/' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id'].'/events';
         Log::info('event id. : ' . OFFLINE_EVENT_CONFIG[$eventname]['event_set_id']);
         // $lines = explode(PHP_EOL, $contents);
         $lines = explode("\n", $contents);
@@ -226,8 +224,8 @@ class FacebookController extends Controller {
 
         // re format data
         $res = ['access_token' => FACEBOOKTOKEN,
-            'upload_tag' => 'store_data',
-            'data' => []];
+        'upload_tag' => 'store_data',
+        'data' => []];
 
         Log::info('Event ' . $eventname . ' total : ' . count($values));
         for ($i = 0; $i < $cnt_values; $i++) {
@@ -261,11 +259,11 @@ class FacebookController extends Controller {
             $data['event_time'] = $event_time;
             $data['event_name'] = $eventname;
             $data['custom_data'] = json_encode($custom_data);
-           // $data['contents'] = [];
-            $data['data_processing_options']="LDU";
+            $data['contents'] = [];
+           /* $data['data_processing_options']="LDU";
             $data['data_processing_options_country']=0;
-            $data['data_processing_options_state']=0;           
-            $res['data'][] = json_encode($data);
+            $data['data_processing_options_state']=0; */          
+            $res['data'][] = $data;
 
             if (($i > 0 && ($i % $numberoflot == 0)) || ($i == ($cnt_values - 1))) {
 //                Log::info('Lot no. : ' . $lot);
@@ -288,8 +286,8 @@ class FacebookController extends Controller {
                 }
 
                 $res = ['access_token' => FACEBOOKTOKEN,
-                    'upload_tag' => 'store_data',
-                    'data' => []];
+                'upload_tag' => 'store_data',
+                'data' => []];
                 $lot++;
             }
         }
@@ -308,7 +306,7 @@ class FacebookController extends Controller {
             $detail = [];
             $detail['type'] = 'WALK';
             $detail['total_error'] = count($error_data);
-            $detail['file_url'] = $error_file_url;
+      //      $detail['file_url'] = $error_file_url;
             $detail['error_desc'] = $error_desc;
 
             $list_mail_recv = explode("||", SEND_MAIL_TO);
@@ -323,7 +321,7 @@ class FacebookController extends Controller {
                 }
                 $cnt_mail++;
             }
-           Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
+            Mail::to($mail_to)->cc($mail_cc)->send(new FacebookOfflineConvertionErrorMail($detail));
         }
 //
 //         Move archieve file
@@ -362,4 +360,5 @@ class FacebookController extends Controller {
         Storage::disk('s3')->move($file_path, $move_to_path);
     }
 
+   
 }
