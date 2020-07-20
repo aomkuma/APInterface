@@ -52,7 +52,7 @@ class FacebookCommand extends Command {
         }
          $facebook_controller = new FacebookController();
       
-    //  $result = $this->processFiles('','Lead');
+  //    $result = $this->processFiles('','Lead');
         $list_mail_recv = explode("||", SEND_MAIL_TO);
         $cnt_mail = 0;
         $mail_to = '';
@@ -74,7 +74,7 @@ class FacebookCommand extends Command {
         Log::info('Eventname : ' . $eventname);
 
        $list = Storage::disk('s3')->files($EVENT_PATH);
-//$list = Storage::disk('local')->files('/test');
+//  $list = Storage::disk('local')->files('/test');
 
         $facebook_controller = new FacebookController();
 
