@@ -52,7 +52,7 @@ class FacebookCommand extends Command {
         }
          $facebook_controller = new FacebookController();
       
-  //    $result = $this->processFiles('','Lead');
+    //  $result = $this->processFiles('','Purchase');
         $list_mail_recv = explode("||", SEND_MAIL_TO);
         $cnt_mail = 0;
         $mail_to = '';
@@ -74,7 +74,7 @@ class FacebookCommand extends Command {
         Log::info('Eventname : ' . $eventname);
 
        $list = Storage::disk('s3')->files($EVENT_PATH);
-//  $list = Storage::disk('local')->files('/test');
+  //$list = Storage::disk('local')->files('/test');
 
         $facebook_controller = new FacebookController();
 
@@ -103,7 +103,7 @@ class FacebookCommand extends Command {
             $storageInstance = Storage::disk('s3');
 
             $S3_file_path = FACEBOOKOFFLINE_LOG . '/' . $file_name;
-           $putFileOnStorage = $storageInstance->put($S3_file_path, $content);
+            $putFileOnStorage = $storageInstance->put($S3_file_path, $content);
         } catch (\Exception $e) {
 
             Log::error($e->getMessage());
